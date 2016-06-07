@@ -27,5 +27,13 @@
     "psr-4": {
       "CoisIO\\M2DevEnv\\": ""
     }
+  },
+  "extra": {
+    "map": [
+      [
+        "docker-compose.yml",
+        "docker-compose.yml"
+      ]
+    ]
   }
 }
