@@ -1,0 +1,31 @@
+{
+  "name": "cois-io/m2-dev-env",
+  "description": "Magento 2 Docker compose Development Environment",
+  "homepage": "https://github.com/cois-io",
+  "type": "magento2-component",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Francois Raubenheimer",
+      "email": "fran@cois.io"
+    }
+  ],
+  "repositories": {
+    "magento-repo": {
+      "type": "composer",
+      "url": "https://repo.magento.com/"
+    }
+  },
+  "require": {
+    "php": "~5.5.0|~5.6.0|~7.0.0",
+    "magento/framework": "~100.0"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "CoisIO\\M2DevEnv\\": ""
+    }
+  }
+}
