@@ -3,15 +3,17 @@ version: '2'
 services:
 
   app-data:
-    container_name: dev_app_data
-    build: nginx
+    container_name: m2d_app_data
+    #build: vendor/cois-io/m2d-nginx
+    image: coisio/m2d-nginx
     volumes:
-      - ..:/www
+      - .:/www
     command: /bin/true
 
   nginx:
-    container_name: dev_nginx
-    build: nginx
+    container_name: m2d_nginx
+    #build: vendor/cois-io/m2d-nginx
+    image: coisio/m2d-nginx
     volumes_from:
       - app-data
     networks:
@@ -20,8 +22,9 @@ services:
       - php-fpm
 
   php-fpm:
-    container_name: dev_php_fpm
-    build: php-fpm
+    container_name: m2d_php_fpm
+    #build: vendor/cois-io/m2d-php-fpm
+    image: coisio/m2d-php-fpm
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -34,14 +37,14 @@ services:
       - redis-cache
 
   db-data:
-    container_name: dev_db_data
-    image: percona:latest
+    container_name: m2d_db_data
+    image: percona:5.7
     volumes:
       - /var/lib/mysql
     command: /bin/true
 
   db:
-    container_name: dev_percona_db
+    container_name: m2d_percona_db
     image: percona:5.7
     ports:
       - "3306:3306"
@@ -60,23 +63,26 @@ services:
       - frontend
 
   elastic-data:
-    container_name: dev_elastic_data
-    build: elasticsearch
+    container_name: m2d_elastic_data
+    #build: vendor/cois-io/m2d-elasticsearch
+    image: cois-io/m2d-elasticsearch
     volumes:
       - /usr/share/elasticsearch/data
     command: /bin/true
 
   elastic:
-    container_name: dev_elasticsearch
-    build: elasticsearch
+    container_name: m2d_elasticsearch
+    #build: vendor/cois-io/m2d-elasticsearch
+    image: cois-io/m2d-elasticsearch
     volumes_from:
       - elastic-data
     networks:
       - backend
 
   varnish:
-    container_name: dev_varnish
-    build: varnish
+    container_name: m2d_varnish
+    #build: vendor/cois-io/m2d-varnish
+    image: coisio/m2d-varnish
     ports:
       - "80:80"
     networks:
@@ -86,7 +92,7 @@ services:
       - nginx
 
   redis-cache:
-    container_name: dev_redis_cache
+    container_name: m2d_redis_cache
     image: redis
     networks:
       - backend
