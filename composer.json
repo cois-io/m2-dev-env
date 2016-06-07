@@ -21,7 +21,8 @@
     "magento/framework": "~100.0",
     "cois-io/m2d-nginx": "~1.0",
     "cois-io/m2d-varnish": "~1.0",
-    "cois-io/m2d-php-fpm": "~1.0"
+    "cois-io/m2d-php-fpm": "~1.0",
+    "cois-io/m2d-elasticsearch": "~1.0"
   },
   "autoload": {
     "files": [
