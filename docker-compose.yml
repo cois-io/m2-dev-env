@@ -65,7 +65,7 @@ services:
   elastic-data:
     container_name: m2d_elastic_data
     #build: vendor/cois-io/m2d-elasticsearch
-    image: cois-io/m2d-elasticsearch
+    image: coisio/m2d-elasticsearch
     volumes:
       - /usr/share/elasticsearch/data
     command: /bin/true
@@ -73,7 +73,7 @@ services:
   elastic:
     container_name: m2d_elasticsearch
     #build: vendor/cois-io/m2d-elasticsearch
-    image: cois-io/m2d-elasticsearch
+    image: coisio/m2d-elasticsearch
     volumes_from:
       - elastic-data
     networks:
