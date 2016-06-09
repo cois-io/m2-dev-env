@@ -1,0 +1,9 @@
+#!/usr/bin/env bash#!/usr/bin/env bash
+
+# Setup docker env
+eval "$(docker-machine env $(docker-machine active))"
+
+export PHP_DOCKER=$(docker ps -a -q --filter="name=php-fpm")
+
+docker exec -it $PHP_DOCKER php -d xdebug.remote_enable=0 -d xdebug.profiler_enable=0 -d xdebug.default_enable=0 -d zend.enable_gc=0 bin/magento "$@"
+
