@@ -1,0 +1,6 @@
+{
+  "proxy": "http://magento.docker",
+  "files": ["pub/*.css", "pub/*.js"],
+  "https": false,
+  "logPrefix": "Magento 2 Dev"
+}
