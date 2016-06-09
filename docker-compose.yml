@@ -3,7 +3,6 @@ version: '2'
 services:
 
   app-data:
-    container_name: m2d_app_data
     #build: vendor/cois-io/m2d-nginx
     image: coisio/m2d-nginx
     volumes:
@@ -11,9 +10,10 @@ services:
     command: /bin/true
 
   nginx:
-    container_name: m2d_nginx
     #build: vendor/cois-io/m2d-nginx
     image: coisio/m2d-nginx
+    ports:
+      - "443:443"
     volumes_from:
       - app-data
     networks:
@@ -22,9 +22,10 @@ services:
       - php-fpm
 
   php-fpm:
-    container_name: m2d_php_fpm
     #build: vendor/cois-io/m2d-php-fpm
     image: coisio/m2d-php-fpm
+    links:
+      - redis-cache:redis-cache
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -36,23 +37,22 @@ services:
     depends_on:
       - redis-cache
 
-  db-data:
-    container_name: m2d_db_data
-    image: percona:5.7
+  db-storage:
+    container_name: db-storage
+    image: mysql
     volumes:
       - /var/lib/mysql
     command: /bin/true
 
   db:
-    container_name: m2d_percona_db
-    image: percona:5.7
+    image: mysql
     ports:
       - "3306:3306"
     depends_on:
-      - db-data
-      - elastic # force it to load last
+      - db-storage
+      - php-fpm # force it to load last
     volumes_from:
-      - db-data
+      - db-storage
     environment:
       - MYSQL_ROOT_PASSWORD=dev
       - MYSQL_DATABASE=magento
@@ -63,7 +63,6 @@ services:
       - frontend
 
   elastic-data:
-    container_name: m2d_elastic_data
     #build: vendor/cois-io/m2d-elasticsearch
     image: coisio/m2d-elasticsearch
     volumes:
@@ -71,7 +70,6 @@ services:
     command: /bin/true
 
   elastic:
-    container_name: m2d_elasticsearch
     #build: vendor/cois-io/m2d-elasticsearch
     image: coisio/m2d-elasticsearch
     volumes_from:
@@ -79,21 +77,22 @@ services:
     networks:
       - backend
 
-  varnish:
-    container_name: m2d_varnish
+# removed varnish for now, we do not need it
+#  varnish:
     #build: vendor/cois-io/m2d-varnish
-    image: coisio/m2d-varnish
-    ports:
-      - "80:80"
-    networks:
-      - backend
-      - frontend
-    depends_on:
-      - nginx
+#    image: coisio/m2d-varnish
+#    ports:
+#      - "80:80"
+#    networks:
+#      - backend
+#      - frontend
+#    depends_on:
+#      - nginx
 
   redis-cache:
-    container_name: m2d_redis_cache
     image: redis
+    ports: 
+      - "6379:6379"
     networks:
       - backend
 
