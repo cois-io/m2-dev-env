@@ -38,6 +38,30 @@ services:
     depends_on:
       - redis-cache
 
+#  browser-sync:
+#    image: ustwo/browser-sync
+#    volumes_from:
+#      - app-data
+#    working_dir: /www
+#    command: start --config /www/vendor/cois-io/m2-dev-env/browser-sync.json
+#    ports:
+#      - "3000:3000"
+#      - "3001:3001"
+#    networks:
+#      - backend
+#    depends_on:
+#      - nginx
+
+#  ngrok-proxy:
+#    image: wernight/ngrok
+#    links:
+#      - nginx
+#    ports:
+#      - "4040:4040"
+#    networks:
+#      - backend
+#    command: /bin/ngrok http -host-header=magento.docker nginx:80
+
   db-storage:
     container_name: db-storage
     image: mysql

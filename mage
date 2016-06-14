@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/usr/bin/env bash
 
 set -e
@@ -9,3 +10,14 @@ PROJECT_BASE=$(basename $(PWD) | tr -d .);
 PROJECT_PHP_DOCKER=$(docker ps -a -q --filter="name=${PROJECT_BASE}_php-fpm")
 # run command in docker container
 docker exec -it ${PROJECT_PHP_DOCKER} php -d xdebug.remote_enable=0 -d xdebug.profiler_enable=0 -d xdebug.default_enable=0 -d zend.enable_gc=0 bin/magento "$@"
+=======
+#!/usr/bin/env bash#!/usr/bin/env bash
+
+# Setup docker env
+eval "$(docker-machine env $(docker-machine active))"
+
+export PHP_DOCKER=$(docker ps -a -q --filter="name=php-fpm")
+
+docker exec -it $PHP_DOCKER php -d xdebug.remote_enable=0 -d xdebug.profiler_enable=0 -d xdebug.default_enable=0 -d zend.enable_gc=0 bin/magento "$@"
+
+>>>>>>> aa790726dd9b5246007765539ec1f23cf7e40b06
