@@ -13,6 +13,7 @@ services:
     #build: vendor/cois-io/m2d-nginx
     image: coisio/m2d-nginx
     ports:
+      - "80:80"
       - "443:443"
     volumes_from:
       - app-data
