@@ -63,7 +63,6 @@ services:
 #    command: /bin/ngrok http -host-header=magento.docker nginx:80
 
   db-storage:
-    container_name: db-storage
     image: mysql
     volumes:
       - /var/lib/mysql
